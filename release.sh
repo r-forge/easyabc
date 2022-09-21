@@ -14,7 +14,9 @@ sed -i -e 's/^\(\ *Date:\).*$/\1 '${DATE}'/' pkg/DESCRIPTION pkg/man/EasyABC-pac
 sed -i -e 's/^\(\ *Version:\).*$/\1 '${VERSION}'/' pkg/DESCRIPTION pkg/man/EasyABC-package.Rd
 sed -i -e 's/\(\\date{\\texttt{EasyABC} version \)[^,]*,/\1 '${VERSION}',/' vignettes/EasyABC.Rnw
 
+echo " *** Update Vignette ***" &&\
 ./updateVignette.sh && {
+  echo " *** Build Package ***"
   RDFILES=$(find pkg/man -name "*.Rd") && \
   # enable examples
   echo ${RDFILES} | xargs sed -i -e 's/^\s*\\dontrun{[^%]/%\\dontrun{/g' && \
