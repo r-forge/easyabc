@@ -172,50 +172,21 @@ void calculstat(double *stat,int *abondloc, int l, double **trait,double ntrait)
     }
     stat[2]+=stat[0]*log(stat[0]);
     stat[2]/=stat[0];
-    /*double meanN=stat[0]/stat[1];
-    for (int i=0;i<l;i++){
-        if (abondloc[i]>0){
-            stat[3]+=(abondloc[i]-meanN)*(abondloc[i]-meanN);
-        }
-    }
-    stat[3]/=stat[1];
-    if (stat[1]>1){
-        stat[3]*=(stat[1]/(stat[1]-1));
-    }*/
-
  for (int k=0;k<ntrait;k++){
 
     for (int i=0;i<l;i++){
         if (abondloc[i]>0){
             stat[(3+2*k)]+=abondloc[i]*trait[i][k];
-            //stat[(7+8*k)]+=trait[i][k];
         }
     }
     stat[(3+2*k)]/=stat[0];
-    //stat[(7+8*k)]/=stat[1];
     
     for (int i=0;i<l;i++){
         if (abondloc[i]>0){
-            //stat[(4+2*k)]+=abondloc[i]*(trait[i][k]-stat[(3+2*k)])*(trait[i][k]-stat[(3+2*k)]);
-            //stat[(8+8*k)]+=(trait[i][k]-stat[(7+8*k)])*(trait[i][k]-stat[(7+8*k)]);
             stat[(4+2*k)]+=abondloc[i]*(trait[i][k]-stat[(3+2*k)])*(trait[i][k]-stat[(3+2*k)])*(trait[i][k]-stat[(3+2*k)]);
-            //stat[(9+8*k)]+=(trait[i][k]-stat[(7+8*k)])*(trait[i][k]-stat[(7+8*k)])*(trait[i][k]-stat[(7+8*k)]);
-	    //stat[(10+8*k)]+=abondloc[i]*(trait[i][k]-stat[(4+8*k)])*(trait[i][k]-stat[(4+8*k)])*(trait[i][k]-stat[(4+8*k)])*(trait[i][k]-stat[(4+8*k)]);
-	    //stat[(11+8*k)]+=(trait[i][k]-stat[(7+8*k)])*(trait[i][k]-stat[(7+8*k)])*(trait[i][k]-stat[(7+8*k)])*(trait[i][k]-stat[(7+8*k)]);
         }
     }
     stat[(4+2*k)]/=stat[0];
-    //stat[(6+8*k)]/=stat[0];
-    //stat[(8+8*k)]/=stat[1];
-    //stat[(9+8*k)]/=stat[1];
-    //stat[(10+8*k)]/=stat[0];
-    //stat[(11+8*k)]/=stat[1];
-    
-    //rendre les estimateurs non biaisés :
-    //if (stat[1]>1){
-    //    stat[(8+8*k)]*=(stat[1]/(stat[1]-1));
-    //}
-    //stat[(4+8*k)]*=(stat[0]/(stat[0]-1));
   }
 }
 
@@ -225,7 +196,6 @@ extern "C" {
 void trait_model(double *input,double *stat_to_return){
 
 //LECTURE DES FICHIERS D'ENTREE 
-    char buffer[256];
     long double seed1p = input[0];
     unsigned long seed2 = 0;
     unsigned long seed1;
@@ -260,7 +230,6 @@ void trait_model(double *input,double *stat_to_return){
     int S = 1000;
     double **trait = new double*[S];
     double *abondreg = new double[S];
-    double sumabondreg=1.0;
     for (int i=0;i<S;i++){
         abondreg[i] = 0.001;
 	trait[i]=new double[1];
@@ -283,7 +252,6 @@ void trait_model(double *input,double *stat_to_return){
     int nstat=3+ntrait*2;
     stat= new double[nstat];
 
-    int i=0;
     //DRAWING OF PARAMETERS
     I=exp(I);
     SS=exp(SS);
