@@ -2,7 +2,7 @@ Package: EasyABC
 Type: Package
 Title: Efficient Approximate Bayesian Computation Sampling Schemes
 Version: 1.5.1.99
-Date: 2022-09-21
+Date: 2022-12-15
 Author: Franck Jabot, Thierry Faure, Nicolas Dumoulin, Carlo Albert.
 Maintainer: Nicolas Dumoulin <nicolas.dumoulin@inrae.fr>
 URL: http://easyabc.r-forge.r-project.org/
